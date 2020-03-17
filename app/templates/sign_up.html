@@ -36,38 +36,24 @@
           <input type="email" class="form-control" id="email" placeholder="Enter email address">
         </div>
         <div class="row justify-content-center">
-          <div class="col-lg-4" >
-            <!-- <a href="#" id="start-camera">Touch here to start the camera</a> -->
+          <div class="col-lg-6" >
             <div id="vid_container">
               <video id="video" class="" autoplay playsinline></video>
               <canvas id="hiddenCanvas" class='hidden'></canvas>
             </div>
             <p id="error-message"></p>
             <button class="btn btn-dark btn-lg" type="button" onclick="signUp()">Sign Up</button>
-
-            <!-- Hidden canvas element. Used for taking snapshot of video. -->
-            <canvas></canvas>
           </div>
         </div>
       </form>
     </div>
- <script src="{{ url_for('static', filename='js/ext/jquery.min.js') }}"></script>
- <script src="{{ url_for('static', filename='js/ext/bootstrap.min.js') }}"></script>
 
- <script src="{{ url_for('static', filename='js/int/DetectRTC.min.js') }}"></script>
- <script src="{{ url_for('static', filename='js/int/adapter.min.js') }}"></script>
- <script src="{{ url_for('static', filename='js/int/screenfull.min.js') }}"></script>
- <script src="{{ url_for('static', filename='js/int/howler.core.min.js') }}"></script>
-
- <!-- <script src="{{ url_for('static', filename='js/int/main2.js') }}"></script> -->
-
-
- <script src="{{ url_for('static', filename='js/int/main.js') }}"></script>
-
- <script src="{{ url_for('static', filename='js/int/navigation.js') }}"></script>
-    <!-- <script src="{{ url_for('static', filename='js/ext/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ext/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/ext/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/int/camera.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/int/navigation.js') }}"></script> -->
-    </body>
+    <script src="{{ url_for('static', filename='js/ext/DetectRTC.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ext/adapter.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/int/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/int/navigation.js') }}"></script>
+   
+  </body>
 </html>

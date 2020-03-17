@@ -1,16 +1,8 @@
-/*
 
->> kasperkamperman.com - 2018-04-18
->> https://www.kasperkamperman.com/blog/camera-template/
+var video = document.querySelector('#video');
 
-*/
-
-
-video = document.getElementById('video');
-var takePhotoButton;
-
-var amountOfCameras = 0;
-var currentFacingMode = 'self';
+//camera will be user(selfie) if the device is mobile
+var currentFacingMode = 'user';
 
 error_message = document.querySelector('#error-message');
 
@@ -25,21 +17,19 @@ function displayErrorMessage(error_msg, error) {
 
 document.addEventListener('DOMContentLoaded', function (event) {
   // do some WebRTC checks before creating the interface
+  //only works on secured connections (https).
   DetectRTC.load(function () {
     // do some checks
     if (DetectRTC.isWebRTCSupported == false) {
       alert(
-        '111 Please use Chrome, Firefox, iOS 11, Android 5 or higher, Safari 11 or higher',
+        'Please use Chrome, Firefox, iOS 11, Android 5 or higher, Safari 11 or higher',
       );
-      displayErrorMessage(' 1111  use Chrome, Firefox, iOS 11, Android 5 or higher, Safari 11 or higher')
+      displayErrorMessage('use Chrome, Firefox, iOS 11, Android 5 or higher, Safari 11 or higher')
     } else {
       if (DetectRTC.hasWebcam == false) {
-        alert(' 2222 Please install an external webcam device. NoNoNoo');
-        displayErrorMessage("2222 Please install an external webcam device.")
+        alert('Please install an external webcam device.');
+        displayErrorMessage("Please install an external webcam device.")
       } else {
-
-        amountOfCameras = DetectRTC.videoInputDevices.length;
-        //initCameraUI();
         initCameraStream();
       }
     }
@@ -47,52 +37,36 @@ document.addEventListener('DOMContentLoaded', function (event) {
   });
 });
 
-// https://github.com/webrtc/samples/blob/gh-pages/src/content/devices/input-output/js/main.js
 function initCameraStream() {
   
-  //  var size = 1280;
   var constraints = {
     audio: false,
-    // video: true
     video: {
-      // width: { ideal: size },
-      // height: { ideal: size },
-      //width: { min: 1024, ideal: window.innerWidth, max: 1920 },
-      //height: { min: 776, ideal: window.innerHeight, max: 1080 },
       facingMode: currentFacingMode,
     },
   };
-
+  //request the camera
   navigator.mediaDevices
     .getUserMedia(constraints)
     .then(handleSuccess)
     .catch(handleError);
-
   function handleSuccess(stream) {
-    //window.stream = stream; // make stream available to browser console
     video.srcObject = stream;
     video.play();
-
   }
-
   function handleError(error) {
     console.log(error);
-    //https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
     if (error === 'PermissionDeniedError') {
-      alert('Permission denied. Please refresh and give permission.');
-      //displayErrorMessage("There was an error with accessing the camera stream: " + err.name, err);
+      alert('Permission denied. Please refresh and allow camera access.');
     }
   }
 }
 
-
 function takeSnapshot() {
 
   var hidden_canvas = document.querySelector('#hiddenCanvas')
-    context = hidden_canvas.getContext('2d');
+  var context = hidden_canvas.getContext('2d');
   
-    
-
   var width = video.videoWidth;
   var height = video.videoHeight;
 
@@ -102,28 +76,22 @@ function takeSnapshot() {
     hidden_canvas.width = width;
     hidden_canvas.height = height;
 
-    // // Make a copy of the current frame in the video on the canvas.
-    
+    // Make a copy of the current frame in the video on the canvas.
     context.drawImage(video, 0, 0, width, height);
 
-    //replace the video with the picture taken
+    // replace the video with the picture taken
     video.classList.add("hidden")
     hidden_canvas.classList.remove('hidden')
     
-
-    // Turn the canvas image into a dataURL that can be used as a src for our photo.
     dataURL = hidden_canvas.toDataURL('image/png');
-    //return dataURL
+
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "")
   }
 }
 
-// will use axios for this to be able to show wrong crredentials
 function post(path, params, method) {
   method = method || "post"; // Set method to post by default if not specified.
 
-  // The rest of this code assumes you are not using a library.
-  // It can be made less wordy if you use one.
   var form = document.createElement("form");
   form.setAttribute("method", method);
   form.setAttribute("action", path);
@@ -163,9 +131,7 @@ function signUp() {
 function login() {
   var endpoint = "/login"
   var snap = takeSnapshot();
-  //console.log(snap)
   post(endpoint, {
     "img": snap
   })
-  
 }
