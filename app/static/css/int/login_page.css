@@ -17,6 +17,7 @@
     object-fit: cover;
     z-index: 0;
 }
+
 .login-card, .signup-card {
     box-shadow: 0px 0px 5px 0px rgba(117, 117, 117, 0.3);
     border: 0px;
